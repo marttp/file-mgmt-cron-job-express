@@ -8,15 +8,12 @@ const {
   createUniqueFormatDirectory
 } = require('./file.util');
 
-const {
-  IMAGE_PATH,
-  TMP_PATH,
-  currentProcessDirectoryName
-} = require('../../configs/file.config');
+const { IMAGE_PATH, TMP_PATH } = require('../../configs/file.config');
 
 cron.schedule(JOB_SCHEDULE, async () => {
   const fileList = await readDirectory(TMP_PATH);
   if (fileList.length) {
+    const currentProcessDirectoryName = moment().format('YYYYMMDDHHmm');
     const eachMinutePath = await createUniqueFormatDirectory(
       currentProcessDirectoryName,
       IMAGE_PATH
